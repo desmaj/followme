@@ -1,0 +1,21 @@
+{
+  "manifest_version": 2,
+
+  "name": "FollowMe Leader",
+  "description": "This extension connects you to FollowMe as a session leader",
+  "version": "1.0",
+
+  "browser_action": {
+    "default_icon": "icon.png"
+  },
+  
+  "background": {
+    "persistent": true,
+    "scripts": ["leader.js"]
+  },
+  
+  "permissions": [
+    "tabs",
+    "webNavigation"
+  ]
+}
