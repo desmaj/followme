@@ -18,6 +18,13 @@ def lead(context, request):
     request.response.headers['Access-Control-Allow-Origin'] = '*'
     return {'id': new_id}
 
+@view_config(name='stop', context='followme.resources.StreamsResource')
+def stop(context, request):
+    id = request.params.get('id')
+    context.stop(id)
+    context.send_message(id, {'action': 'stop'})
+    return Response('OK')
+
 @view_config(name='follow', context='followme.resources.RootResource', renderer='templates/follow.mako')
 def follow(request):
     return {'id': request.params.get('id')}

@@ -1,4 +1,4 @@
-var serviceURLBase = "http://localhost:6543/streams/"
+var serviceURLBase = "http://bacondispenser.org:6543/streams/"
 var sessionIDs = {};
 
 var doPOST = function (url, params, callback) {
@@ -28,8 +28,12 @@ var withCurrentTab = function (callback) {
 chrome.browserAction.onClicked.addListener(function () {
     withCurrentTab(function (currentTab) {
 	if (sessionIDs[currentTab.index]) {
-	    delete sessionIDs[currentTab.index];
-	    console.log('capture off');
+	    var stopURL = serviceURLBase + "stop";
+	    var params = encodeURI('id=' + sessionIDs[currentTab.index] + '&url=' + currentTab.url);
+	    doPOST(stopURL, params, function (event) {
+		delete sessionIDs[currentTab.index]
+		console.log('capture off');
+	    });
 	} else {
 	    var leadURL = serviceURLBase + "lead";
 	    doPOST(leadURL, null, function (event) {
